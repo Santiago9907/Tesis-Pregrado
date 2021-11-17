@@ -51,7 +51,9 @@ def actor(theta, td_error, x, a, contador):
 
 def actor_critic(x_0, c, theta, v, dim=70, epsilon = 0.001):
     #Inicializo gráfico
-    plt.axis([0, 200,0, 200])
+    '''fig = plt.figure()
+    rt.graficar_reticulo(fig)'''
+
     #Inicializo policy-parameter, value function, weight vector y la estimación de mi A.R.
     #v = csr_matrix(np.zeros((dim**2,1)).reshape((dim**2,1)),dtype=float)
     #theta = csr_matrix(np.zeros((4*(dim**2),1),dtype=float))
@@ -79,15 +81,15 @@ def actor_critic(x_0, c, theta, v, dim=70, epsilon = 0.001):
         print('Recompensa: ' + str(recompensa) + '|| Td-error: ' + str(round(td_error,4)) + " || E: " + 
                 str(x_0) + " || Theta: " + str(round(norm(theta),4)) + 
                 " || v: " + str(round(norm(v),4)) + '|| n: ' + str(contador))
-        plt.scatter(x_t[0], x_t[1])
-        plt.pause(0.005)
+        '''plt.scatter(x_t[0], x_t[1], color = 'black')
+        plt.pause(0.005)'''
 
         #Actualizaciones del Actor y del Crítico
         v = critico(v, td_error, x_t, contador)[1]
         theta_t = actor(theta, td_error, x_t, accion, contador)[1]
         
         #Verifica si termino
-        if contador == 10000: #Cambiar condición
+        if contador == 50000: #Cambiar condición
             termino = True
             print('Llegó')
         theta = theta_t

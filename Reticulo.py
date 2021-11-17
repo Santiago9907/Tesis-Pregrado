@@ -23,8 +23,7 @@ region8 = {'x':(np.arange(start=140, stop=170)).tolist(),'y':[25,26,27]}
 zona_prohibida = [region1,region2,region3,region4,region5,region6,region7]
 borde = [1,199]
 
-def graficar_reticulo():
-    fig = plt.figure()
+def graficar_reticulo(fig):
     ax = fig.add_subplot(111)
     ax.set_facecolor('#EBEBEB')
     r1 = plt.Rectangle((15, 40),2, 60, color = 'darkred')
@@ -46,7 +45,8 @@ def graficar_reticulo():
     plt.xlim([0,200])
     plt.ylim([0,200])
     plt.title('Retículo 200x200 con obstáculos', fontdict={'family':'serif','color':'black','size':20})
-    plt.show()
+    #plt.show()
+    return ax
 """
 Probabilidades
 Subir = 1
@@ -94,9 +94,9 @@ def decision(x_actual, accion_tomada, acciones=acciones_reticulo, d=200):
 
     #Se mueve el dron de acuerdo a la acción tomada    
     x_actual = x_actual + movimiento_realizado
-    '''if x_actual[0]>=d or x_actual[0]<=1 or x_actual[1]<=1 or x_actual[1]>=d: 
+    if x_actual[0]>=d or x_actual[0]<=1 or x_actual[1]<=1 or x_actual[1]>=d: 
         x_actual[0] = choice(np.arange(0,200),replace=True)
-        x_actual[1] = choice(np.arange(0,200),replace=True)'''
+        x_actual[1] = choice(np.arange(0,200),replace=True)
     return x_actual
 
 '''
@@ -110,7 +110,7 @@ def recompensa(x_actual, tipo = 1):
         for region in zona_prohibida:
             if x_actual[0] in region['x'] and x_actual[1] in region['y']: return -1000
         if x_actual[0] in borde or x_actual[1] in borde: return -10
-        if x_actual[0] in zona_objetivo or x_actual[1] in zona_objetivo: return 10
+        if x_actual[0] in zona_objetivo and x_actual[1] in zona_objetivo: return 100
         else: return 0
 
     #recompensa según qué tan lejos está
