@@ -109,8 +109,8 @@ def recompensa(x_actual, tipo = 1):
     if tipo == 1:
         for region in zona_prohibida:
             if x_actual[0] in region['x'] and x_actual[1] in region['y']: return -1000
-        if x_actual[0] in borde or x_actual[1] in borde: return -10
-        if x_actual[0] in zona_objetivo and x_actual[1] in zona_objetivo: return 100
+        if x_actual[0] in borde or x_actual[1] in borde: return -100
+        if x_actual[0] in zona_objetivo and x_actual[1] in zona_objetivo: return 1000
         else: return 0
 
     #recompensa según qué tan lejos está
